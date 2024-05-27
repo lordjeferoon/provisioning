@@ -17,6 +17,12 @@ info:
 server:
   port: 11000
 
+#app:
+#  mongodbDatabase: ussdmx
+  #mongodbUri: "mongodb://127.0.0.1:27017"
+  #mongodbUri: "mongodb://root:123456@mongo_db:27017/hacomDb?authSource=admin"
+#  mongodbUri: "mongodb://admin:rw,.12a@192.168.5.128:27017/ussdmx?authSource=admin"
+
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -28,6 +34,8 @@ spring:
       port: 27017
       username: admin
       password: rw,.12a
+      reactive: # Asegúrate de incluir esto para la configuración reactiva
+        enabled: true
   codec:
     max-in-memory-size: 10MB
 

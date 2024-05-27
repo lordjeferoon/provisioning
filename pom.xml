@@ -152,7 +152,7 @@
                 </configuration>
             </plugin>
             
-            <plugin>
+            <!--<plugin>
       <groupId>org.codehaus.mojo</groupId>
       <artifactId>jaxws-maven-plugin</artifactId>
       <version>2.6</version>
@@ -165,13 +165,14 @@
       </executions>
       <configuration>
         <wsdlFiles>
-          <wsdlFile>src/main/resources/provisioning.wsdl</wsdlFile>
-        </wsdlFiles>
+		  <wsdlFile>${basedir}/src/main/resources/provisioning.wsdl</wsdlFile>
+		</wsdlFiles>
+
         <bindingDirectory>src/main/resources/</bindingDirectory>
         <packageName>com.example.provisioning</packageName>
         <sourceDestDir>src/main/java</sourceDestDir>
       </configuration>
-    </plugin>
+    </plugin>-->
             
             <!--<plugin>
 	            <groupId>org.apache.maven.plugins</groupId>

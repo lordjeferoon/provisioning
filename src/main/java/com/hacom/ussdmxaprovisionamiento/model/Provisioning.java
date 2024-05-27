@@ -8,10 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Builder
 @Document(collection = "tt_ussd_provisioning")
 public class Provisioning {
 
@@ -22,7 +22,7 @@ public class Provisioning {
 	private String imsi;
 	private String subscription;
 	private String language;
-	private boolean status;
+	private boolean status = true;
 
 	public String getId() {
 		return id;
