@@ -1,13 +1,13 @@
 package com.hacom.ussdmxaprovisionamiento.security;
 
-import lombok.extern.log4j.Log4j2;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.ReactiveAuthenticationManager;
-import org.springframework.security.core.Authentication;
-import reactor.core.publisher.Mono;
+//import lombok.extern.log4j.Log4j2;
+//import org.springframework.security.authentication.BadCredentialsException;
+//import org.springframework.security.authentication.ReactiveAuthenticationManager;
+//import org.springframework.security.core.Authentication;
+//import reactor.core.publisher.Mono;
 
-@Log4j2
-public class SimpleReactiveAuthenticationManager implements ReactiveAuthenticationManager {
+//@Log4j2
+/*public class SimpleReactiveAuthenticationManager implements ReactiveAuthenticationManager {
 
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
@@ -22,4 +22,8 @@ public class SimpleReactiveAuthenticationManager implements ReactiveAuthenticati
     private boolean isValidApiKey(String apiKey) {
         return apiKey != null && apiKey.equals("claveApiVálida");
     }
+}*/
+
+public class SimpleReactiveAuthenticationManager {
+	
 }

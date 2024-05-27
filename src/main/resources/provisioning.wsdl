@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.example.com/provisioning"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://www.example.com/provisioning"
+             name="ProvisioningService">
+
+    <types>
+        <xsd:schema targetNamespace="http://www.example.com/provisioning">
+            <xsd:import namespace="http://www.example.com/provisioning" schemaLocation="provisioning.xsd"/>
+        </xsd:schema>
+    </types>
+
+    <message name="saveProvisioningRequest">
+        <part name="methodCall" element="tns:methodCall"/>
+    </message>
+
+    <message name="saveProvisioningResponse">
+        <part name="response" element="tns:response"/>
+    </message>
+
+    <portType name="ProvisioningPort">
+        <operation name="saveProvisioning">
+            <input message="tns:saveProvisioningRequest"/>
+            <output message="tns:saveProvisioningResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="ProvisioningBinding" type="tns:ProvisioningPort">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="saveProvisioning">
+            <soap:operation soapAction="http://www.example.com/provisioning/saveProvisioning"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="ProvisioningService">
+        <documentation>Provisioning Service</documentation>
+        <port name="ProvisioningPort" binding="tns:ProvisioningBinding">
+            <soap:address location="http://localhost:11000/ws"/>
+        </port>
+    </service>
+</definitions>

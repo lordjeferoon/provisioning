@@ -4,11 +4,11 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
 import org.springframework.stereotype.Repository;
 
-import com.hacom.ussdmxaprovisionamiento.model.USSDProvisioning;
+import com.hacom.ussdmxaprovisionamiento.model.Provisioning;
 
 import reactor.core.publisher.Flux;
 
 @Repository
-public interface USSDProvisioningRepo extends ReactiveMongoRepository<USSDProvisioning, String> {
-    Flux<USSDProvisioning> findAllByStatus(boolean status);
+public interface ProvisioningRepository extends ReactiveMongoRepository<Provisioning, String> {
+    Flux<Provisioning> findAllByStatus(boolean status);
 }
