@@ -13,11 +13,11 @@
     </types>
 
     <message name="saveProvisioningRequest">
-        <part name="methodCall" element="tns:methodCall"/>
+        <part name="methodCall" element="tns:MethodCallRequest"/>
     </message>
 
     <message name="saveProvisioningResponse">
-        <part name="response" element="tns:response"/>
+        <part name="response" element="tns:MethodCallResponse"/>
     </message>
 
     <portType name="ProvisioningPort">

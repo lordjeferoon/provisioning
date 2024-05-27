@@ -1,28 +1,35 @@
 package com.hacom.ussdmxaprovisionamiento.xml;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
-@XmlRootElement(name = "response")
+@XmlRootElement(name = "MethodCallResponse", namespace = "http://www.example.com/provisioning")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Response {
 
-	private String status;
+	@XmlElement(name = "result", namespace = "http://www.example.com/provisioning")
+	private String result;
 
-	public Response() {
+	@XmlElement(name = "message", namespace = "http://www.example.com/provisioning")
+	private String message;
+
+	public String getResult() {
+		return result;
 	}
 
-	public Response(String status) {
-		this.status = status;
+	public void setResult(String result) {
+		this.result = result;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
+	public Response(String result, String message) {
+		this.result = result;
+		this.message = message;
+	}
 }

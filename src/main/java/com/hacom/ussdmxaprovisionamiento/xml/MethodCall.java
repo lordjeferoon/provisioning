@@ -3,11 +3,14 @@ package com.hacom.ussdmxaprovisionamiento.xml;
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
-@XmlRootElement(name = "methodCall")
+@XmlRootElement(name = "MethodCallRequest", namespace = "http://www.example.com/provisioning")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MethodCall {
 
+	@XmlElement(name = "methodName", namespace = "http://www.example.com/provisioning")
 	private String methodName;
+
+	@XmlElement(name = "params", namespace = "http://www.example.com/provisioning")
 	private Params params;
 
 	public String getMethodName() {
@@ -27,6 +30,7 @@ public class MethodCall {
 	}
 
 	public static class Params {
+		@XmlElement(name = "param", namespace = "http://www.example.com/provisioning")
 		private List<Param> param;
 
 		public List<Param> getParam() {
@@ -38,6 +42,7 @@ public class MethodCall {
 		}
 
 		public static class Param {
+			@XmlElement(name = "value", namespace = "http://www.example.com/provisioning")
 			private Value value;
 
 			public Value getValue() {
@@ -49,7 +54,10 @@ public class MethodCall {
 			}
 
 			public static class Value {
+				@XmlElement(name = "string", namespace = "http://www.example.com/provisioning")
 				private String string;
+
+				@XmlElement(name = "struct", namespace = "http://www.example.com/provisioning")
 				private Struct struct;
 
 				public String getString() {
@@ -69,6 +77,7 @@ public class MethodCall {
 				}
 
 				public static class Struct {
+					@XmlElement(name = "member", namespace = "http://www.example.com/provisioning")
 					private List<Member> member;
 
 					public List<Member> getMember() {
@@ -80,8 +89,11 @@ public class MethodCall {
 					}
 
 					public static class Member {
+						@XmlElement(name = "name", namespace = "http://www.example.com/provisioning")
 						private String name;
-						private Value value;
+
+						@XmlElement(name = "value", namespace = "http://www.example.com/provisioning")
+						private MemberValue value;
 
 						public String getName() {
 							return name;
@@ -91,12 +103,27 @@ public class MethodCall {
 							this.name = name;
 						}
 
-						public Value getValue() {
+						public MemberValue getValue() {
 							return value;
 						}
 
-						public void setValue(Value value) {
+						public void setValue(MemberValue value) {
 							this.value = value;
+						}
+
+						public static class MemberValue {
+
+							@XmlElement(name = "string", namespace = "http://www.example.com/provisioning")
+							private String value;
+
+							public String getValue() {
+								return value;
+							}
+
+							public void setValue(String value) {
+								this.value = value;
+							}
+
 						}
 
 					}
@@ -104,5 +131,4 @@ public class MethodCall {
 			}
 		}
 	}
-
 }
