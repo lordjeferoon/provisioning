@@ -25,6 +25,9 @@ public class ProvisioningEndpoint {
     @ResponsePayload
     public MethodCallResponse saveProvisioning(@RequestPayload MethodCallRequest methodCall) {
     	MethodCallResponse response = new MethodCallResponse();
+    	MethodCallResponse.Params responseParams = new MethodCallResponse.Params();
+        MethodCallResponse.Params.Param param = new MethodCallResponse.Params.Param();
+        MethodCallResponse.Params.Param.Value value = new MethodCallResponse.Params.Param.Value();
     	
     	if(methodCall.getMethodName().equals("provisioning.createbyImsi")) {
             Provisioning provisioning = new Provisioning();
@@ -42,14 +45,16 @@ public class ProvisioningEndpoint {
 
             provisioningService.saveProvisioning(provisioning)
                 .doOnSuccess(savedProvisioning -> {
-                    response.setMessage("SUCCESS");
-                    response.setResult("Provisioning saved successfully");
+                    value.setBooleanValue(1);
+                    param.setValue(value);
+                    responseParams.getParam().add(param);
+                    response.setParams(responseParams);
+                    
                     System.out.println("Provisioning saved successfully: " + savedProvisioning);
                 })
                 .doOnError(error -> {
-                    response.setMessage("ERROR");
-                    response.setResult("Provisioning failed: " + error.getMessage());
-                    System.out.println("Provisioning save failed: " + error.getMessage());
+                	response.setFault(createFaultResponse("4", error.getMessage()));
+                    //System.out.println("Provisioning save failed: " + error.getMessage());
                 })
                 .block();
     	}else {
@@ -57,22 +62,71 @@ public class ProvisioningEndpoint {
 
     			provisioningService.updateStatusToFalse(methodCall.getParams().getParam().get(0).getValue().getString()) //IMSI
                 .doOnSuccess(updatedProvisioning -> {
-                    response.setMessage("SUCCESS");
-                    response.setResult("Status updated to false for IMSI: " + updatedProvisioning.getImsi());
+                	if(updatedProvisioning!= null) {
+                		value.setBooleanValue(1);
+                        param.setValue(value);
+                        responseParams.getParam().add(param);
+                        response.setParams(responseParams);
+                	}else {
+                		response.setFault(createFaultResponse("4", "No se realizó la eliminación. MSISDN no encontrado"));
+                	}
                 })
                 .doOnError(error -> {
-                    response.setMessage("ERROR");
-                    response.setResult("Failed to update status: " + error.getMessage());
+                	response.setFault(createFaultResponse("4", "Error deleting provisioning"));
                 })
                 .block(); // Bloquea la ejecución hasta que se complete
 
             return response;
     		}else {
-    			response.setMessage("NOT FOUND");
-                response.setResult("Método no encontrado");
+    			if(methodCall.getMethodName().equals("provisioning.consultbyImsi")) {
+    				provisioningService.findProvisioningByImsi(methodCall.getParams().getParam().get(0).getValue().getString())
+    				.doOnSuccess(provisioning -> {
+    					if(provisioning!= null) {
+    						value.setBooleanValue(1);
+                            
+    					}else {
+    						value.setBooleanValue(0);
+    					}
+    					param.setValue(value);
+                        responseParams.getParam().add(param);
+                        response.setParams(responseParams);
+                    })
+    				.doOnError(error -> {
+    					response.setFault(createFaultResponse("4", "Error deleting provisioning"));
+                    })
+    				.block();
+    			}else {
+    				response.setFault(createFaultResponse("4", "Método no existente"));
+    			}
+    			
     		}
     	}
     	
     	return response;
+    }
+    
+    private MethodCallResponse.Fault createFaultResponse(String faultCode, String faultString) {
+        MethodCallResponse.Fault fault = new MethodCallResponse.Fault();
+        MethodCallResponse.Fault.FaultValue value = new MethodCallResponse.Fault.FaultValue();
+        MethodCallResponse.Fault.FaultValue.FaultStruct struct = new MethodCallResponse.Fault.FaultValue.FaultStruct();
+        MethodCallResponse.Fault.FaultValue.FaultStruct.FaultMember faultCodeMember = new MethodCallResponse.Fault.FaultValue.FaultStruct.FaultMember();
+        MethodCallResponse.Fault.FaultValue.FaultStruct.FaultMember faultStringMember = new MethodCallResponse.Fault.FaultValue.FaultStruct.FaultMember();
+        
+        faultCodeMember.setName("faultCode");
+        MethodCallResponse.Fault.FaultValue.FaultStruct.FaultMember.MemberValue faultCodeValue = new MethodCallResponse.Fault.FaultValue.FaultStruct.FaultMember.MemberValue();
+        faultCodeValue.setIntValue(Integer.parseInt(faultCode));
+        faultCodeMember.setValue(faultCodeValue);
+
+        faultStringMember.setName("faultString");
+        MethodCallResponse.Fault.FaultValue.FaultStruct.FaultMember.MemberValue faultStringValue = new MethodCallResponse.Fault.FaultValue.FaultStruct.FaultMember.MemberValue();
+        faultStringValue.setStringValue(faultString);
+        faultStringMember.setValue(faultStringValue);
+
+        struct.getMember().add(faultCodeMember);
+        struct.getMember().add(faultStringMember);
+        value.setStruct(struct);
+        fault.setValue(value);
+
+        return fault;
     }
 }

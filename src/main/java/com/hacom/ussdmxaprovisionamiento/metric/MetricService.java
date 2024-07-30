@@ -1,7 +1,6 @@
 package com.hacom.ussdmxaprovisionamiento.metric;
 
 import io.micrometer.core.instrument.MeterRegistry;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import io.micrometer.core.instrument.Counter;
 

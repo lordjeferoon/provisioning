@@ -1,6 +1,8 @@
 package com.hacom.ussdmxaprovisionamiento.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -8,11 +10,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Document(collection = "tt_ussd_provisioning")
+@CompoundIndexes({
+    @CompoundIndex(name = "imsi_index", def = "{'imsi': 1}", unique = true)
+})
 public class Provisioning {
 
 	@Id

@@ -6,8 +6,9 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.Collection;
 
-/*public class ApiKeyAuthentication extends AbstractAuthenticationToken {
-    private final String apiKey;
+public class ApiKeyAuthentication {
+//public class ApiKeyAuthentication extends AbstractAuthenticationToken {
+    /*private final String apiKey;
     public ApiKeyAuthentication(String apiKey, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.apiKey = apiKey;
@@ -22,9 +23,5 @@ import java.util.Collection;
     @Override
     public Object getPrincipal() {
         return apiKey;
-    }
-}*/
-
-public class ApiKeyAuthentication {
-	
+    }*/
 }

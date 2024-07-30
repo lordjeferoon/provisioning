@@ -11,8 +11,9 @@ import reactor.core.publisher.Mono;
 
 import java.util.Collections;
 
-//@Log4j2
-/*public class ApiKeyAuthenticationFilter extends AuthenticationWebFilter {
+public class ApiKeyAuthenticationFilter {
+/*@Log4j2
+public class ApiKeyAuthenticationFilter extends AuthenticationWebFilter {
 
     private static final String API_GW_KEY_UNIQUE = "$H@c0M2023G@t3waY$";
     private static final String API_GW_KEY_NAME = "API-GATEWAY-HEADER-HACOM";
@@ -40,10 +41,6 @@ import java.util.Collections;
         } else {
             throw new BadCredentialsException("Invalid authorization header");
         }
-    }
+    }*/
 
-}*/
-
-public class ApiKeyAuthenticationFilter {
-	
 }

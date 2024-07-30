@@ -50,14 +50,63 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-	
-	<xs:element name="MethodCallResponse">
+
+    <xs:element name="MethodCallResponse">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="result" type="xs:string"/>
-                <xs:element name="message" type="xs:string"/>
-            </xs:sequence>
+            <xs:choice>
+                <xs:element name="params">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="param" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="value">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="boolean" type="xs:integer"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="fault">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="value">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="struct">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="member" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="name" type="xs:string"/>
+                                                                <xs:element name="value">
+                                                                    <xs:complexType>
+                                                                        <xs:sequence>
+                                                                            <xs:element name="int" type="xs:int" minOccurs="0"/>
+                                                                            <xs:element name="string" type="xs:string" minOccurs="0"/>
+                                                                        </xs:sequence>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
         </xs:complexType>
     </xs:element>
-
 </xs:schema>
